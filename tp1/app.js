@@ -2,6 +2,19 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+requests = {}
+
+app.use('/', function (req, res, next) {
+    console.log(Date() + " | " + req.url);
+    if (requests.hasOwnProperty(req.url)) {
+        requests[req.url]+=1
+    } else {
+        requests[req.url] = 1
+    }
+    
+    next();
+});
+
 app.get('/', (req, res) => {
     res.send('Hello World!')
 })
@@ -34,10 +47,21 @@ app.get('/users/:name', (req, res) => {
 })
 
 app.get('/somme', (req, res) => {
-    res.send(req.query.a + req.query.b)
+    res.send((parseInt(req.query.a) + parseInt(req.query.b))+"")
 })
 
+app.get('/metrics', (req, res) => {
+    res.send({
+        "status": "healthy",
+        "requestsCount": requests,
+        "uptime": process.uptime()
+    })
+})
 
+app.use('*', (res, req) => {
+    res.send("Cette page n'existe pas!")
+    res.status(404)
+})
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
