@@ -1,0 +1,3 @@
+1. package.json sert à lister les dépendences pour le script
+2. package-lock liste les fichiers, modules, et leur controle d'intégrité
+3. 
