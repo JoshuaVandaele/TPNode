@@ -1,3 +1,5 @@
 1. package.json sert à lister les dépendences pour le script
 2. package-lock liste les fichiers, modules, et leur controle d'intégrité
-3. 
+3. La commande installe le package en tant que dépendance de développement, donc il ne sera pas utilisé pour la release de l'application, mais plutôt pour les tests de dev. Si express est utilisé uniquement pour les tests et la mise au point, alors oui, installer express en tant que dépendance de développement est une bonne idée.
+4. Un fichier de configuration permet d'être plus flexible et simplifie la maintenance
+5. findOne permet de trouver et retourner le premier résultat dans une collection d'une base de données.
