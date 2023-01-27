@@ -5,5 +5,9 @@
     "jsonschema": "^1.4.1",
     "lodash": "^4.17.21",
     "mongodb": "^4.13.0"
+  },
+  "scripts": {
+    "tp1": "node ./tp1/app.js",
+    "tp2": "node ./tp2/src/app.js"
   }
 }
