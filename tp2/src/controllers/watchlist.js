@@ -148,11 +148,22 @@ async function findMovies(req, res, next) {
     }
 }
 
+async function listWatchlists(req, res, next) {
+    try {
+        const result = await (await find("watchlists", {owner: await getUserId(req.params.username)})).toArray();
+        return res.send(result);
+    } catch (e) {
+        console.log(e);
+        return next(e);
+    }
+}
+
 module.exports = {
     createWatchlist,
     findWatchlist,
     addMovieToWatchlist,
     removeMovieFromWatchlist,
     deleteWatchlist,
-    findMovies
+    findMovies,
+    listWatchlists
 };
