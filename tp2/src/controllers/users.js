@@ -1,4 +1,4 @@
-const { insertOne, findOne, updateOne } = require('../services/db/crud')
+const { insertOne, findOne, updateOne, find } = require('../services/db/crud')
 
 async function userExists(query) {
   try {
@@ -52,8 +52,19 @@ async function editUser(req, res, next) {
   }
 }
 
+async function listUsers(req, res, next) {
+  try {
+    const result = await (await find("users")).toArray();
+    return res.send(result);
+  } catch (e) {
+    console.log(e);
+    return next(e);
+  }
+}
+
 module.exports = {
   createUser,
   findUser,
-  editUser
+  editUser,
+  listUsers
 };
