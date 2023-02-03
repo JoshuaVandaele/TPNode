@@ -14,5 +14,8 @@
 - add
   - name=WATCHLISTNAME
   - id=MOVIE_ID
+- delete
+  - name=WATCHLISTNAME
+  - id=MOVIE_ID
 - find
   - name=WATCHLISTNAME
