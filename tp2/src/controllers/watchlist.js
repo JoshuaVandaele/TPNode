@@ -1,5 +1,5 @@
 const { ObjectId } = require('mongodb');
-const { insertOne, findOne, updateOne, deleteOne } = require('../services/db/crud')
+const { insertOne, findOne, updateOne, deleteOne, find } = require('../services/db/crud')
 
 async function getUserId(username) {
     const result = await findOne("users", { name: username });
@@ -44,7 +44,7 @@ async function addMovieToWatchlist(req, res, next) {
             const id = new ObjectId(req.query.id)
             const movie = await findOne("movies", { _id: id });
             if (movie) {
-                const watchlist = {name: req.query.name}
+                const watchlist = { name: req.query.name }
                 if ((await getOwnerId(watchlist)).equals(await getUserId(req.params.username))) {
                     const result = await updateOne("watchlists", { name: req.query.name }, { $addToSet: { movies: [id] } })
                     return res.send(result)
@@ -70,7 +70,7 @@ async function removeMovieFromWatchlist(req, res, next) {
             const id = new ObjectId(req.query.id)
             const movie = await findOne("movies", { _id: id });
             if (movie) {
-                const watchlist = {name: req.query.name}
+                const watchlist = { name: req.query.name }
                 if ((await getOwnerId(watchlist)).equals(await getUserId(req.params.username))) {
                     const result = await updateOne("watchlists", { name: req.query.name }, { $pull: { movies: [id] } })
                     return res.send(result)
@@ -92,7 +92,7 @@ async function removeMovieFromWatchlist(req, res, next) {
 
 async function deleteWatchlist(req, res, next) {
     try {
-        const watchlist = {name: req.query.name}
+        const watchlist = { name: req.query.name }
         if ((await getOwnerId(watchlist)).equals(await getUserId(req.params.username))) {
             const result = await deleteOne("watchlists", { name: req.query.name })
             return res.send(result)
@@ -108,15 +108,41 @@ async function deleteWatchlist(req, res, next) {
 
 async function findMovies(req, res, next) {
     try {
-        const watchlist = {name: req.query.name}
+        const watchlist = { name: req.query.name }
         if ((await getOwnerId(watchlist)).equals(await getUserId(req.params.username))) {
-            const result = await findOne("watchlists", { name: req.query.name })
-            return res.send(result.movies)
+            let filter = {}
+            let movies = [];
+            if (req.query.lang) {
+                filter["language"] = req.query.lang
+            }
+            if (req.query.rating) {
+                filter["rating"] = req.query.rating
+            }
+            if (req.query.year) {
+                filter["year"] = year
+            }
+            const result = await (await find("watchlists", { name: req.query.name })).toArray()
+            console.log(result)
+            for (const movie_id of result[0].movies) {
+                let data = await findOne("movies", { _id: movie_id[0] })
+                for (const key in filter) {
+                    if (data[key] != filter[key]) {
+                        data = null
+                        break;
+                    }
+                }
+                if (data) {
+                    movies.push(data)
+                }
+            };
+            console.log("movies")
+            console.log(movies)
+            return res.send(movies)
         }
         else {
             return next("You do not own this watchlist")
         }
-    } catch(e) {
+    } catch (e) {
         console.log(e)
         return next(e)
     }
