@@ -39,3 +39,6 @@ Remove a movie from a watchlist
 Lists the movies in a watchlist
 - listmovies
   - name=WATCHLISTNAME
+  - *lang=LANGUAGE (en, fr, etc)*
+  - *rating=RATING*
+  - *year=RELEASEYEAR*
