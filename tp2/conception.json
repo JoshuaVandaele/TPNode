@@ -1,0 +1,32 @@
+// users
+[
+    {
+        "name": "toto",
+        "watchlists": [
+            1,
+            2
+        ]
+    }
+]
+
+// watchlists
+[
+    {
+        "name": "watchlistname",
+        "desc": "usersNote",
+        "movies": [
+            1,
+        ],
+        "owner": 1,
+    }
+]
+
+// movies
+[
+    {
+        "name": "movie",
+        "language": ["en", "fr"],
+        "rating": 5,
+        "year": 2023
+    }
+]
