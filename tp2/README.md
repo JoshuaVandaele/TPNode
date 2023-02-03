@@ -29,6 +29,9 @@ Find a watchlist by name
 - find
   - name=WATCHLISTNAME
 
+Add a note to a user's watchlist
+- anotate
+
 Add a movie to a watchlist
 - addmovie
   - name=WATCHLISTNAME

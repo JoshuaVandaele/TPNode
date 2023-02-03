@@ -162,7 +162,7 @@ async function anotateWatchlist(req, res, next) {
     try {
         const watchlist = { name: req.query.name }
         if ((await getOwnerId(watchlist)).equals(await getUserId(req.params.username))) {
-            const result = await await updateOne("watchlists", { name: req.query.name }, { note: req.query.note })
+            const result = await await updateOne("watchlists", { name: req.query.name }, { $set: {note: req.query.note }})
             return res.send(result)
         }
         else {
