@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const users = require('./users');
+const watchlist = require('./watchlist');
 
 const metrics = {
     requestsCount: {},
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/users', users);
+app.use('/users/:username/watchlist', watchlist);
 
 app.get('/', (req, res, next) => {
     return res.send('Hello World !');
