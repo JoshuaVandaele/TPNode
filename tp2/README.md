@@ -22,16 +22,20 @@ Delete a watchlist
 - delete
   - name=WATCHLISTNAME
 
+Find a watchlist by name
+- find
+  - name=WATCHLISTNAME
+
 Add a movie to a watchlist
-- add
+- addmovie
   - name=WATCHLISTNAME
   - id=MOVIE_ID
 
 Remove a movie from a watchlist
-- remove
+- removemovie
   - name=WATCHLISTNAME
   - id=MOVIE_ID
 
-Find a watchlist by name
-- find
+Lists the movies in a watchlist
+- listmovies
   - name=WATCHLISTNAME
