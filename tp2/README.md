@@ -13,6 +13,9 @@ Find an existing user by name
 - find
   - name=USERNAME
 
+List existing users
+- list
+
 `/users/USERNAME/watchlist`  
 Create a watchlist
 - create

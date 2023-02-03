@@ -158,6 +158,23 @@ async function listWatchlists(req, res, next) {
     }
 }
 
+async function anotateWatchlist(req, res, next) {
+    try {
+        const watchlist = { name: req.query.name }
+        if ((await getOwnerId(watchlist)).equals(await getUserId(req.params.username))) {
+            const result = await await updateOne("watchlists", { name: req.query.name }, { note: req.query.note })
+            return res.send(result)
+        }
+        else {
+            return next("You do not own this watchlist")
+        }
+    } catch (e) {
+        console.log(e)
+        return next(e);
+    }
+}
+
+
 module.exports = {
     createWatchlist,
     findWatchlist,
@@ -165,5 +182,6 @@ module.exports = {
     removeMovieFromWatchlist,
     deleteWatchlist,
     findMovies,
-    listWatchlists
+    listWatchlists,
+    anotateWatchlist
 };
