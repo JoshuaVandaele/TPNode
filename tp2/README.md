@@ -7,3 +7,8 @@
   - newname=NEW_USERNAME
 - find
   - name=USERNAME
+
+/users/USERNAME/watchlist
+- create
+  - name=WATCHLISTNAME
+- 
