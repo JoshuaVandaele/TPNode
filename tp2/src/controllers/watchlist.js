@@ -1,5 +1,5 @@
 const { ObjectId } = require('mongodb');
-const { insertOne, findOne, updateOne } = require('../services/db/crud')
+const { insertOne, findOne, updateOne, deleteOne } = require('../services/db/crud')
 
 async function getUserId(username) {
     const result = await findOne("users", { name: username });
@@ -64,8 +64,35 @@ async function addMovieToWatchlist(req, res, next) {
     }
 }
 
+async function removeMovieFromWatchlist(req, res, next) {
+    try {
+        if (req.query.id) {
+            const id = new ObjectId(req.query.id)
+            const movie = await findOne("movies", { _id: id });
+            if (movie) {
+                const watchlist = {name: req.query.name}
+                if ((await getOwnerId(watchlist)).equals(await getUserId(req.params.username))) {
+                    const result = await updateOne("watchlists", { name: req.query.name }, { $pull: { movies: [id] } })
+                    return res.send(result)
+                }
+                else {
+                    return next("You do not own this watchlist")
+                }
+            } else {
+                return next("Movie doesn't exist")
+            }
+        } else {
+            return next("Missing argument")
+        }
+    } catch (e) {
+        console.log(e)
+        return next(e);
+    }
+}
+
 module.exports = {
     createWatchlist,
     findWatchlist,
-    addMovieToWatchlist
+    addMovieToWatchlist,
+    removeMovieFromWatchlist
 };
