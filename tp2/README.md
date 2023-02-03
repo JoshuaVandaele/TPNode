@@ -11,4 +11,8 @@
 /users/USERNAME/watchlist
 - create
   - name=WATCHLISTNAME
-- 
+- add
+  - name=WATCHLISTNAME
+  - id=MOVIE_ID
+- find
+  - name=WATCHLISTNAME
