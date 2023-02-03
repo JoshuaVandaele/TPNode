@@ -106,11 +106,27 @@ async function deleteWatchlist(req, res, next) {
     }
 }
 
+async function findMovies(req, res, next) {
+    try {
+        const watchlist = {name: req.query.name}
+        if ((await getOwnerId(watchlist)).equals(await getUserId(req.params.username))) {
+            const result = await findOne("watchlists", { name: req.query.name })
+            return res.send(result.movies)
+        }
+        else {
+            return next("You do not own this watchlist")
+        }
+    } catch(e) {
+        console.log(e)
+        return next(e)
+    }
+}
 
 module.exports = {
     createWatchlist,
     findWatchlist,
     addMovieToWatchlist,
     removeMovieFromWatchlist,
-    deleteWatchlist
+    deleteWatchlist,
+    findMovies
 };
