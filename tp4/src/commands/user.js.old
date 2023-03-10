@@ -1,0 +1,10 @@
+const { SlashCommandBuilder } = require('discord.js');
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('user')
+		.setDescription('Get some basic user info'),
+	async execute(interaction) {
+		await interaction.reply(interaction.member.user.toString() + '" joined the server at ' + interaction.member.joinedAt);
+	},
+};
