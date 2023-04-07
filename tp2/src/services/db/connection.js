@@ -26,8 +26,12 @@ async function connectTodB() {
 }
 
 function getCollection(collectionName) {
+    if (!collectionName || typeof collectionName !== 'string') {
+        throw new Error('Invalid collection name');
+    }
     return client.db(dbName).collection(collectionName);
 }
+
 
 module.exports = {
     connectTodB,
