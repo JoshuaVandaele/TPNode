@@ -14,6 +14,16 @@ module.exports = {
                         .setDescription("name of the watchlist to create")
                         .setRequired(true)
                 )
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('find')
+                .setDescription('Find a watchlist')
+                .addStringOption(option =>
+                    option.setName("name")
+                        .setDescription("name of the watchlist to find")
+                        .setRequired(true)
+                )
         ),
     async execute(interaction) {
         let message = ""
